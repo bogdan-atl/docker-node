@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  idena1:
+    build: .
+    restart: always
+    ports:
+      - "127.0.0.1:9009:9009"
+      - "127.0.0.1:40405:4045"
+    volumes:
+      - ./node/datadir:/app/idena/datadir
+    environment:
+     API_KEY: 221
+     NODE_KEY: 
+     CONF: ({"DataDir":"/app/idena/datadir","RPC":{"HTTPHost":"0.0.0.0","HTTPPort":9009},"IpfsConf":{"Profile":"server","IpfsPort":40405,"BlockPinThreshold":0.3,"FlipPinThreshold":0.5},"P2P":{"MaxInboundPeers":12,"MaxOutboundPeers":6},"Sync":{"FastSync":true}} )
+     VER: 0.26.1
+    ulimits:
+     nproc: 1000000000
+     nofile:
+      soft: 20000
+      hard: 40000
+    deploy:
+     resources:
+      limits:
+       cpus: '1'
+       memory: 1G
